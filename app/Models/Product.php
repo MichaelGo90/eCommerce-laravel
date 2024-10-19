@@ -13,6 +13,11 @@ class Product extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'price'];
+    protected $fillable = ['name', 'price', 'quantity'];
 
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

@@ -61,4 +61,21 @@ class ProductRepository
                 'maxPrice' => $listProductsDTO->maxPrice
             ]));
     }
+
+    public function validateOrderItems(array $items): void
+    {
+        $itemIds = array_column($items, 'id');
+        $itemsDB = $this->productModel->find($itemIds);;
+        foreach ($itemsDB as $item) {
+            $product = $this->productModel->find($item['id']);
+            if ($product->quantity < $item['quantity']) {
+                abort(400, 'Product ' . $product->name . ' has only ' . $product->quantity . ' items in stock');
+            }
+        }
+    }
+
+    public function getByIds($ids)
+    {
+        return $this->productModel->find($ids);
+    }
 }

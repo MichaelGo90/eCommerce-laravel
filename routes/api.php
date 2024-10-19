@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +17,5 @@ Route::post('/tokens/create', function (Request $request) {
 });
 
 Route::resource('products', ProductController::class);
-//Route::get('/products', [ProductController::class, 'list']);
-//Route::post('/products', [ProductController::class, 'create']);
-//Route::get('/products/{id}', [ProductController::class, 'show']);
-//Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::post('orders', [OrderController::class, 'store'])->middleware('auth:sanctum');
+Route::post('login', [UserController::class, 'login']);
